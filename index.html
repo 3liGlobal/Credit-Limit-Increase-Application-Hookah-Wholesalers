@@ -91,18 +91,21 @@
                             <!---------Email Starts Here---------->
                             <div class="name-item-1">
                                 <!---------Email Starts Here---------->
-                                <li class="zf-tempFrmWrapper zf-large"><label class="zf-labelName">
-                                        Email
-                                        <em class="zf-important">*</em>
-                                    </label>
-                                    <div class="zf-tempContDiv">
-                                        <span> <input fieldType=9 type="text" maxlength="255" name="Email"
-                                                checktype="c5" value="" placeholder="" id="Email" /></span>
-                                        <p id="Email_error" class="zf-errorMessage" style="display:none;">Invalid value
-                                        </p>
-                                    </div>
-                                    <div class="zf-clearBoth"></div>
-                                </li><!---------Email Ends Here---------->
+                                <li class="zf-tempFrmWrapper zf-large col2"><label class="zf-labelName">
+                                    Email
+                                    <em class="zf-important">*</em>
+                                </label>
+                                <div class="zf-tempContDiv">
+                                    <span id="loaderContainer"> <input fieldType=9 type="text" maxlength="255" name="Email"
+                                            checktype="c5" value="" placeholder="" id="Email" />
+                                        <div id="loader"></div>
+                                    </span>
+                                    <p id="Email_error" class="zf-errorMessage" style="display:none;">Please complete
+                                        this required field.</p>
+                                </div>
+                                <div class="zf-clearBoth"></div>
+                            </li>
+                                <!---------Email Ends Here---------->
                             </div>
                             <div class="name-item-1">
                                 <!---------Email Ends Here---------->
@@ -199,10 +202,27 @@
         var isSalesIQIntegrationEnabled = false;
         var salesIQFieldsArray = [];
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
         window.addEventListener('message', function (event) {
             var email = event.data;
             document.getElementById('Email').value = email;
+            document.getElementById("Email").readOnly = true;
+            let checkField = setInterval(function () {
+                if ($('#Email').val() !== '') {
+                    $('#loader').hide();
+                    clearInterval(checkField);
+                }
+            }, 100);
+            $('#loader').hide();
+        });
+    </script>
+    <script>
+        $('form').submit(function () {
+            $('#zf-submitColor').prop('disabled', true);
+            setTimeout(function () {
+                $('#zf-submitColor').prop('disabled', false);
+            }, 5000);
         });
     </script>
 </body>
